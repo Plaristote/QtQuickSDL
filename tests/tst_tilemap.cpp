@@ -315,7 +315,8 @@ int main(int argc, char *argv[])
     Qt::QueuedConnection);
 
   engine.rootContext()->setContextProperty("game", &game);
-  engine.loadFromModule("QtQuickSDLTest", "Main");
+  engine.rootContext()->setContextProperty("qsdlrenderer", game.qsdlRenderer());
+  engine.loadFromModule("QtQuickSDLTestTilemap", "Main");
 
   return app.exec();
 }

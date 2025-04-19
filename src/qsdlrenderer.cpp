@@ -5,6 +5,7 @@
 QSDLRenderer::QSDLRenderer(QObject *parent) : QObject{parent}, m_textures(*this)
 {
   m_context = QSDLContext::require();
+  m_fillColor = Qt::white;
   m_size = QSize(800, 600);
   m_window = SDL_CreateWindow("QSDLRenderer",
     SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
@@ -33,7 +34,7 @@ void QSDLRenderer::setSize(QSize size)
   {
     SDL_SetWindowSize(m_window, size.width(), size.height());
     m_size = size;
-    emit sizeChanged();
+    emit sizeChanged(size);
   }
 }
 
@@ -49,13 +50,13 @@ void QSDLRenderer::setWindowVisible(bool value)
   if (m_window)
   {
     value ? SDL_ShowWindow(m_window) : SDL_HideWindow(m_window);
-    emit windowVisibilityChanged();
+    emit windowVisibilityChanged(value);
   }
 }
 
 void QSDLRenderer::render()
 {
-  SDL_SetRenderDrawColor(m_renderer, 0x20, 0x20, 0x20, 0xFF);
+  SDL_SetRenderDrawColor(m_renderer, m_fillColor.red(), m_fillColor.green(), m_fillColor.blue(), m_fillColor.alpha());
   SDL_RenderClear(m_renderer);
   emit renderStart();
   renderTask();

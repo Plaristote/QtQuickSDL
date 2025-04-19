@@ -5,23 +5,24 @@ Window {
   width: 640
   height: 480
   visible: true
-  title: qsTr("QtQuickSDL Tilemap Test")
+  title: qsTr("QtQuickSDL Test")
 
   SDLItem {
+    id: sdlItem
     anchors.fill: parent
-    renderer: game.renderer
+    renderer: qsdlrenderer
   }
 
   Timer {
     running: true
     repeat: true
     interval: 100
-    onTriggered: game.renderer.render()
+    onTriggered: sdlItem.renderer.render()
   }
 
   Shortcut {
     sequence: "Ctrl+H"
-    onActivated: game.renderer.visibleWindow = !game.renderer.visibleWindow
+    onActivated: sdlItem.renderer.visibleWindow = !sdlItem.renderer.visibleWindow
   }
 
   Shortcut {
